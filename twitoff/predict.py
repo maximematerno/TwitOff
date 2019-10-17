@@ -1,9 +1,9 @@
 """Prediction of Users based on Tweet embeddings."""
+import pickle
 import numpy as np
 from sklearn.linear_model import LogisticRegression
 from .model import User
 from .twitter import BASILICA
-
 
 def predict_user(user1_name, user2_name, tweet_text):
     """Determine and return which user is more likely to say a given Tweet.
@@ -12,7 +12,7 @@ def predict_user(user1_name, user2_name, tweet_text):
         user1_name: str, twitter user name for user2 in comparison
         tweet_text: str, tweet text to evaluate
     # Returns
-        logistic regression model
+        prediction from logistic regression model
     """
     user1 = User.query.filter(User.username == user1_name).one()
     user2 = User.query.filter(User.username == user2_name).one()

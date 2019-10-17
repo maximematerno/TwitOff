@@ -7,7 +7,6 @@ from .twitter import add_or_update_user, update_all_users, add_default_users
 
 load_dotenv()
 
-
 def create_app():
     """Create and configure an instance of the Flask application"""
     app = Flask(__name__)
@@ -17,9 +16,7 @@ def create_app():
 
     @app.route('/')
     def root():
-        return render_template('base.html',
-                               title='Home',
-                               users=User.query.all())
+        return render_template('base.html', title='Home', users=User.query.all())
 
     @app.route('/user', methods=['POST'])
     @app.route('/user/<name>', methods=['GET'])
@@ -33,10 +30,7 @@ def create_app():
         except Exception as e:
             message = "Error adding {}: {}".format(name, e)
             tweets = []
-        return render_template('user.html',
-                               title=name,
-                               tweets=tweets,
-                               message=message)
+        return render_template('user.html', title=name, tweets=tweets, message=message)
 
     @app.route('/compare', methods=['POST'])
     def compare(message=''):
@@ -51,9 +45,7 @@ def create_app():
             message = '"{}" is more likely to be said by {} than {}'.format(
                 request.values['tweet_text'], user1 if prediction else user2,
                 user2 if prediction else user1)
-        return render_template('prediction.html',
-                               title='Prediction',
-                               message=message)
+        return render_template('prediction.html', title='Prediction', message=message)
 
     @app.route('/reset')
     def reset():
@@ -64,15 +56,11 @@ def create_app():
     @app.route('/update')
     def update():
         update_all_users()
-        return render_template('base.html',
-                               users=User.query.all(),
-                               title='All Tweets updated!')
+        return render_template('base.html', users=User.query.all(), title='All tweets updated!')
 
     @app.route('/add_default')
     def add_default():
         add_default_users()
-        return render_template('base.html',
-                               users=User.query.all(),
-                               title='Added Default Users to Database!')
+        return render_template('base.html', users=User.query.all(), title='Added Default Users to Database!')
 
     return app

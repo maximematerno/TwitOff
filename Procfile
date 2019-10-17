@@ -1,1 +1,1 @@
-web: gunicorn TwitCompare:APP --timeout 300
+web: gunicorn TwitOff:APP --timeout 300
